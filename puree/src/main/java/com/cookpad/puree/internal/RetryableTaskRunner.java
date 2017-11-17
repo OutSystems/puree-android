@@ -33,7 +33,7 @@ public class RetryableTaskRunner {
         if (future != null) {
             future.cancel(false);
         }
-        future = executor.scheduleAtFixedRate(task, backoffCounter.timeInMillis(), backoffCounter.timeInMillis(), TimeUnit.MILLISECONDS);
+        future = executor.schedule(task, backoffCounter.timeInMillis(), TimeUnit.MILLISECONDS);
     }
 
     public synchronized void reset() {
@@ -42,11 +42,6 @@ public class RetryableTaskRunner {
     }
 
     public synchronized void retryLater() {
-        if (backoffCounter.isRemainingRetryCount()) {
-            backoffCounter.incrementRetryCount();
-            startDelayed();
-        } else {
-            reset();
-        }
+        startDelayed();
     }
 }

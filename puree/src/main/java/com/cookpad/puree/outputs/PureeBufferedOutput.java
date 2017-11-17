@@ -67,6 +67,9 @@ public abstract class PureeBufferedOutput extends PureeOutput {
         final Records records = getRecordsFromStorage();
 
         if (records.isEmpty()) {
+            // If empty reset the executor so it can be rescheduled by the next log arrival
+            // If this is not done the next call to the tryToStart() method will return early
+            flushTask.reset();
             storage.unlock();
             return;
         }
@@ -77,11 +80,22 @@ public abstract class PureeBufferedOutput extends PureeOutput {
             @Override
             public void success() {
                 storage.delete(records);
+
+                if (getRecordsFromStorage().isEmpty()) {
+                    // Once empty reset the executor so it can be rescheduled by the next log arrival
+                    // If this is not done the next call to the tryToStart() method will return early
+                    flushTask.reset();
+                }
+                else {
+                    flushTask.retryLater();
+                }
+
                 storage.unlock();
             }
 
             @Override
             public void fail() {
+                flushTask.retryLater();
                 storage.unlock();
             }
         });
