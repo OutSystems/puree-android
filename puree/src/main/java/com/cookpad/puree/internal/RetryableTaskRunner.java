@@ -42,11 +42,6 @@ public class RetryableTaskRunner {
     }
 
     public synchronized void retryLater() {
-        if (backoffCounter.isRemainingRetryCount()) {
-            backoffCounter.incrementRetryCount();
-            startDelayed();
-        } else {
-            reset();
-        }
+        startDelayed();
     }
 }
