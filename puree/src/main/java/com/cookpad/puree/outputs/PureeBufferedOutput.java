@@ -16,6 +16,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public abstract class PureeBufferedOutput extends PureeOutput {
 
+    private static final int MAX_LOG_CAPACITY = 1000;
+
     RetryableTaskRunner flushTask;
 
     ScheduledExecutorService executor;
@@ -26,6 +28,12 @@ public abstract class PureeBufferedOutput extends PureeOutput {
     @Override
     public void initialize(PureeLogger logger) {
         super.initialize(logger);
+
+        if(storage.count() > MAX_LOG_CAPACITY) {
+            // Truncate the oldest logs down to max log capacity
+            storage.truncateBufferedLogs(MAX_LOG_CAPACITY);
+        }
+
         executor = logger.getExecutor();
         flushTask = new RetryableTaskRunner(new Runnable() {
             @Override
