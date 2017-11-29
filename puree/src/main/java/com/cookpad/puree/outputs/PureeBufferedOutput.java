@@ -26,6 +26,7 @@ public abstract class PureeBufferedOutput extends PureeOutput {
     @Override
     public void initialize(PureeLogger logger) {
         super.initialize(logger);
+
         executor = logger.getExecutor();
         flushTask = new RetryableTaskRunner(new Runnable() {
             @Override

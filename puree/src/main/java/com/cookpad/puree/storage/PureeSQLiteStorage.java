@@ -51,6 +51,7 @@ public class PureeSQLiteStorage extends SQLiteOpenHelper implements PureeStorage
         db = getWritableDatabase();
     }
 
+    @Override
     public void insert(String type, JsonObject jsonLog) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_NAME_TYPE, type);
@@ -58,6 +59,7 @@ public class PureeSQLiteStorage extends SQLiteOpenHelper implements PureeStorage
         db.insert(TABLE_NAME, null, contentValues);
     }
 
+    @Override
     public Records select(String type, int logsPerRequest) {
         String query = "SELECT * FROM " + TABLE_NAME +
                 " WHERE " + COLUMN_NAME_TYPE + " = ?" +
@@ -101,7 +103,8 @@ public class PureeSQLiteStorage extends SQLiteOpenHelper implements PureeStorage
 
     }
 
-    private int getRecordCount() {
+    @Override
+    public int count() {
         String query = "SELECT COUNT(*) FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
         int count = 0;
@@ -127,7 +130,7 @@ public class PureeSQLiteStorage extends SQLiteOpenHelper implements PureeStorage
 
     @Override
     public void truncateBufferedLogs(int maxRecords) {
-        int recordSize = getRecordCount();
+        int recordSize = count();
         if (recordSize > maxRecords) {
             String query = "DELETE FROM " + TABLE_NAME +
                     " WHERE id IN ( SELECT id FROM " + TABLE_NAME +
