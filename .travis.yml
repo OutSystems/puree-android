@@ -10,3 +10,4 @@ before_install:
     - ./gradlew androidDependencies
 script:
     - ./gradlew check
+    
