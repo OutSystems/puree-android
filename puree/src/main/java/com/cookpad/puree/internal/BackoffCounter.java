@@ -12,6 +12,10 @@ public class BackoffCounter {
         return retryCount;
     }
 
+    public int getMaxRetryCount() {
+        return maxRetryCount;
+    }
+
     public BackoffCounter(int baseTimeMillis, int maxRetryCount) {
         this.baseTimeMillis = baseTimeMillis;
         this.maxRetryCount = maxRetryCount;
