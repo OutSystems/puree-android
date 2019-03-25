@@ -2,9 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
-def GROUP_ID = 'com.cookpad.puree'
-def ARTIFACT_ID = 'puree'
-def VERSION = "4.1.1"
+def GROUP_ID = 'com.github.OutSystems'
+def ARTIFACT_ID = 'puree-android'
+def VERSION = "v4.1.1-OS4"
 
 project.version = VERSION
 println "building ${GROUP_ID}:${ARTIFACT_ID}:${VERSION}"
