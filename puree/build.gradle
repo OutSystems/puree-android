@@ -51,8 +51,7 @@ android.libraryVariants.all { variant ->
         source = variant.javaCompile.source
 
         // Add all of your dependencies and android jars to the classpath
-        classpath += files(variant.javaCompile.classpath.files)
-        classpath += files(android.getBootClasspath())
+        doFirst { classpath = files(variant.javaCompile.classpath.files) + files(android.getBootClasspath()) }
         exclude '**/BuildConfig.java'
         exclude '**/R.java'
 
