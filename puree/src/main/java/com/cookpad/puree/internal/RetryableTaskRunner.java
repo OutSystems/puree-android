@@ -43,7 +43,7 @@ public class RetryableTaskRunner {
 
     public synchronized void retryLater() {
         if(backoffCounter.getMaxRetryCount() <= 0) {
-            // Ignore retry mechanism and keep scheduling the executor
+            backoffCounter.incrementRetryCount();
             startDelayed();
         }
         else {

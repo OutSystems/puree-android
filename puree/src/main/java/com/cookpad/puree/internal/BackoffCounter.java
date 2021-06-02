@@ -8,6 +8,10 @@ public class BackoffCounter {
 
     private int retryCount = 0;
 
+    private final int maxRetryExponent = 20;
+
+    private final double retryBaseFactor = 1.5;
+
     public int getRetryCount() {
         return retryCount;
     }
@@ -37,7 +41,13 @@ public class BackoffCounter {
         if (retryCount == 0) {
             return baseTimeMillis;
         } else {
-            return baseTimeMillis * (retryCount + 1);
+            return calculateRetryTime();
         }
+    }
+
+    private long calculateRetryTime() {
+        int exponent = Math.min(retryCount, maxRetryExponent);
+        return (long) (baseTimeMillis + (Math.pow(retryBaseFactor, exponent) * 1000));
+
     }
 }

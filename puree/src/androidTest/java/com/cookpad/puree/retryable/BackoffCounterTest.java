@@ -22,17 +22,17 @@ public class BackoffCounterTest {
 
         backoffCounter.incrementRetryCount();
         assertThat(backoffCounter.getRetryCount(), is(1));
-        assertThat(backoffCounter.timeInMillis(), is(20L));
+        assertThat(backoffCounter.timeInMillis(), is((long) (10 + (Math.pow(1.5, 1) * 1000))));
         assertThat(backoffCounter.isRemainingRetryCount(), is(true));
 
         backoffCounter.incrementRetryCount();
         assertThat(backoffCounter.getRetryCount(), is(2));
-        assertThat(backoffCounter.timeInMillis(), is(30L));
+        assertThat(backoffCounter.timeInMillis(), is((long) (10 + (Math.pow(1.5, 2) * 1000))));
         assertThat(backoffCounter.isRemainingRetryCount(), is(true));
 
         backoffCounter.incrementRetryCount();
         assertThat(backoffCounter.getRetryCount(), is(3));
-        assertThat(backoffCounter.timeInMillis(), is(40L));
+        assertThat(backoffCounter.timeInMillis(), is((long) (10 + (Math.pow(1.5, 3) * 1000))));
         assertThat(backoffCounter.isRemainingRetryCount(), is(false));
 
         backoffCounter.resetRetryCount();
