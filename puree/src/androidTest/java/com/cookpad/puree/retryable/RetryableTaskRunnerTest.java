@@ -53,7 +53,7 @@ public class RetryableTaskRunnerTest {
 
         task.retryLater();
 
-        assertThat(latch.await(40, TimeUnit.MILLISECONDS), is(true));
+        assertThat(latch.await(5100, TimeUnit.MILLISECONDS), is(true));
 
         assertThat(latch.getCount(), is(0L));
     }

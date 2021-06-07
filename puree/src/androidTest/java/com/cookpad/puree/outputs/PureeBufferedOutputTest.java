@@ -254,7 +254,7 @@ public class PureeBufferedOutputTest {
         logger.send(new PvLog("baz"));
         logger.flush();
 
-        Thread.sleep(100);
+        Thread.sleep(5100);
 
         assertThat(logs.poll(100, TimeUnit.MILLISECONDS), is("{\"name\":\"foo\"}"));
         assertThat(logs.poll(100, TimeUnit.MILLISECONDS), is("{\"name\":\"bar\"}"));
